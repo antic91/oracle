@@ -63,3 +63,66 @@ INSERT INTO DUMMY VALUES (0);
 COMMIT;
 
 select DNAME as ABTEILUNGSNAME from dept;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+SELECT DNAME AS "DEPARTMENT NAME"  FROM DEPT;
+
+SELECT EMPNO, ENAME, TO_CHAR(hiredate, 'DD Month YYYY')FROM emp;
+
+
+select 
+    ENAME,
+    TO_DATE(SysDate,'YYYY-MM-DD')  - TO_DATE(HIREDATE,'YYYY-MM-DD') as DAYS
+from EMP;
+
+                    
+SELECT 
+DISTINCT JOB AS "Possible jobs"
+FROM EMP;
+
+SELECT MIN(SAL) FROM EMP;
+SELECT MAX(SAL) FROM EMP;
+
+
+
+
+
+SELECT
+    COUNT(*)
+FROM EMP;
+
+
+
+
+SELECT
+    JOB,
+    COUNT(ALL JOB) c
+FROM EMP
+GROUP BY JOB
+ORDER BY c;
+
+
+SELECT AVG(SAL)
+FROM EMP;
+
+
+SELECT * FROM EMP;
+
+
+
