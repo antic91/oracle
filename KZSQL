@@ -550,13 +550,13 @@ VALUES (101
       , 'AC_ACCOUNT'
       , 110);
 INSERT INTO job_history
-VALUES (101
+VALUES (104
       , DATE'1993-10-28'
       , DATE'1997-03-15'
       , 'AC_MGR'
       , 110);
 INSERT INTO job_history
-VALUES (201
+VALUES (202
       , DATE'1996-02-17'
       , DATE'1999-12-19'
       , 'MK_REP'
@@ -576,17 +576,81 @@ VALUES  (176
        , 80
        );
 INSERT INTO job_history
-VALUES  (176
+VALUES  (178
        , DATE'1999-01-01'
        , DATE'1999-12-31'
        , 'SA_MAN'
        , 80
        );
 INSERT INTO job_history
-VALUES  (200
+VALUES  (208
        , DATE'1994-06-01'
        , DATE'1998-12-31'
        , 'AC_ACCOUNT'
        , 90
        );
        
+
+
+
+SOLUTIONS::
+
+SELECT 
+    employee_id,
+    last_name,
+    job_id AS "job identifier",
+    hire_date AS "STARTDATE"
+FROM employees;
+
+
+
+SELECT DISTINCT job_id FROM employees;
+
+
+SELECT 
+    employee_id AS " Emp #",
+    last_name AS "Employee",
+    job_id AS "Job",
+    hire_date AS "Hire Date"
+FROM employees;
+
+
+SELECT 
+    last_name AS "Last Name",
+    salary AS "Salary"
+FROM employees
+WHERE SALARY>12000;
+
+
+
+SELECT 
+    last_name AS "Last Name",
+    department_id as "Department number"
+FROM employees
+WHERE employee_id = 176;
+
+
+
+SELECT
+    last_name AS "Last name",
+    job_id as "Job identifier",
+    hire_date as "Hire date"
+FROM employees
+ORDER BY hire_date ASC;
+
+
+select 
+    last_name AS "Last name",
+    department_id AS "Department number"
+from employees
+WHERE department_id=20
+ORDER BY last_name ASC;
+
+
+SELECT
+    last_name AS "Employee",
+    salary AS "Monthly Salary",
+    commission_pct AS "Commission" 
+FROM employees
+WHERE commission_pct = 0.2
+ORDER BY last_name ASC;
