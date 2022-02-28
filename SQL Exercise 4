@@ -1,1 +1,148 @@
 
+select 
+    *
+from teams
+where playerno !=27;
+
+/**********************************************************************
+
+select 
+    playerno,
+    name,
+    initials
+from players
+where playerno in(SELECT 
+                    playerno
+                  from matches
+                  where won > 0);
+
+
+select 
+    playerno,
+    name,
+    initials
+from players a
+where exists(SELECT 
+                    playerno
+                  from matches
+                  where won >0
+                  and a.playerno = playerno);
+                  
+/**********************************************************************
+
+
+
+
+select 
+    playerno,
+    name
+from players p
+where exists(select
+                count(*) c
+            from penalties
+            GROUP BY penalties.playerno
+            having count(*) >0 and
+            p.playerno = playerno)
+order by playerno;
+
+
+
+
+
+select 
+    playerno,
+    name
+from players p
+where exists(select
+                count(*) c
+            from penalties
+            where p.playerno = playerno 
+            and amount >= 50
+            GROUP BY playerno
+            having count(*) > 0
+            )
+order by playerno;
+
+
+
+
+select 
+    playerno,
+    name
+from players
+where year_of_birth in(select
+                            MAX(year_of_birth)
+                       from players);
+                       
+                       
+                       
+                       
+                       
+7-12****************************************
+
+select 
+    *
+from departments d
+where not EXISTS(select 
+                    *
+                from employees
+                where d.department_id = department_id);
+                
+                
+                
+                
+                
+select
+    *
+from emp e
+where exists(select *
+            from emp
+            where ename = UPPER('jones')
+            and e.job = job)
+            
+            
+            
+            
+select
+    *
+from emp
+where sal > (select
+                ROUND(AVG(SAL),2)
+            from emp e
+            where deptno = 30);
+            
+            
+            
+            
+select
+    *
+from emp
+where sal > (select
+                MAX(SAL)
+            from emp e
+            where deptno = 30);
+            
+            
+            
+            
+select
+    *
+from emp e
+where deptno = 10
+and not EXISTS(select
+                    *
+               from emp
+               where deptno = 30
+               and e.job = job);
+         
+         
+         
+select
+    EMPNO,
+    ENAME,
+    JOB,
+    SAL
+from emp e
+where SAL in(select 
+                max(sal)
+            from emp);
