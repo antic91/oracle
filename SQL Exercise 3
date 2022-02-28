@@ -1,0 +1,185 @@
+1-8 Tennis queries
+
+
+select 
+    playerno,
+    name
+from players
+where year_of_birth > 1960;
+
+
+
+select 
+    playerno,
+    name,
+    town
+from players
+where sex= 'F'
+AND town != 'Stratford';
+
+
+
+select 
+    playerno
+from players
+where year_joined >=1970
+AND year_joined <= 1980;
+
+
+select
+    playerno,
+    name,
+    year_of_birth
+from players
+where MOD(year_of_birth,400) = 0
+OR MOD(year_of_birth,100) = 0
+OR MOD(year_of_birth,4) = 0;
+
+
+
+
+
+select 
+    PAYMENTNO
+from penalties
+where amount >= 50
+and amount <= 100;
+
+
+select
+    playerno,
+    name
+from players
+where town NOT IN ('Stratford','Douglas');
+
+
+select
+    playerno,
+    name
+from players
+where SOUNDEX(name) = SOUNDEX('is') 
+order by name;
+
+
+
+select
+    playerno,
+    name
+from players
+where leagueno IS NULL 
+order by name;
+
+
+
+
+
+9 - 21 EmpDept queries.
+
+
+
+
+select 
+    * 
+from emp
+where sal < comm;
+
+
+select 
+    * 
+from emp
+where deptno = 30 
+and sal >= 1500;
+
+
+
+select 
+    * 
+from emp
+where job in ('MANAGER')
+and deptno not in(30);
+
+
+
+select 
+    * 
+from emp
+where deptno = 10
+and job in('MANAGER','CLERK');
+
+
+select 
+    * 
+from emp
+where sal >= 1200 
+and sal <= 1300;
+
+
+select 
+    * 
+from emp
+where length(ename) = 5
+and substr(ename,1,3) = 'ALL';
+
+
+
+select 
+    ename,
+    sal,
+    comm,
+    sal + NVL(comm,0) as Salary_commision
+from emp;
+
+
+
+
+select
+    *
+from emp
+where comm > 0.25 * sal;
+
+
+
+
+select
+    ROUND(AVG(SAL),2)
+from emp;
+
+
+
+select
+    *
+from emp
+where comm IS NOT NAN;
+
+
+
+/*********************************************************
+
+select
+    COUNT(*),
+    job
+from emp
+where deptno = 30
+group by job;
+
+select
+    count(DISTINCT job)
+from emp
+where deptno = 30
+/*********************************************************
+
+
+select
+    count(*)
+from emp
+where deptno = 30
+
+
+select
+    *
+from emp
+WHERE least(to_date(hiredate,'dd.mm,yyyy'), to_date('15/4/81','dd.mm,yyyy')) = to_date(hiredate,'dd.mm,yyyy')
+and greatest(to_date(hiredate,'dd.mm,yyyy'), to_date('4/1/81','dd.mm,yyyy')) = to_date(hiredate,'dd.mm,yyyy');
+
+
+
