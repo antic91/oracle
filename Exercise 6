@@ -1,0 +1,12 @@
+select 
+    name,
+    initials,
+    cc
+from players a,
+    (select
+        playerno,
+        count(all won) as cc
+    from matches
+    group by playerno) b    
+where a.playerno = b.playerno
+;
