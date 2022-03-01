@@ -1,0 +1,77 @@
+select
+    count(all PLAYERNO),
+    year_joined
+from players
+group by year_joined
+order by year_joined;
+
+
+
+
+
+
+select
+    playerno,
+    ROUND(AVG(amount),2),
+    count(all playerno)
+from penalties
+group by playerno;
+
+
+
+select
+    count(all paymentno)
+from penalties
+where extract(year from to_date(pen_date,'dd-mm-yyyy')) < 83;
+
+
+
+select
+    count(all name) c
+from players
+GROUP BY town
+having count(all name) > 4;
+
+
+select
+    playerno,
+    count(all playerno),
+    SUM(amount)
+from penalties
+group by playerno;
+
+
+
+select
+    playerno,
+    name,
+    initials
+from players p
+where exists(select 
+    playerno,
+        count(all playerno) as NUMBER_OF_PENALTIES
+    from penalties
+    where p.playerno = playerno 
+    group by playerno
+    having count(all playerno) > 1 );
+    
+    
+    
+    select
+    extract(YEAR FROM to_date(pen_date,'dd/mm/yyyy')),
+    count(all pen_date)
+from penalties
+group by extract(YEAR FROM to_date(pen_date,'dd/mm/yyyy'));
+
+
+
+
+select
+    extract(YEAR FROM to_date(pen_date,'dd/mm/yyyy')),
+    count(all pen_date)
+from penalties
+group by extract(YEAR FROM to_date(pen_date,'dd/mm/yyyy'))
+having count(all pen_date) = 2;
+
+
+
