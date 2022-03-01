@@ -75,3 +75,119 @@ having count(all pen_date) = 2;
 
 
 
+select 
+    name,
+    initials
+from players p
+where exists(select
+                playerno,
+                count(all playerno)
+            from penalties
+            where amount > 40 and
+            p.playerno = playerno
+            group by playerno
+            having count(all playerno) >= 2);
+                
+                
+                
+                
+                
+select
+    name,
+    initials
+from players
+where playerno in (select 
+                        playerno
+                    from penalties
+                    having sum(amount) in (select
+                                            max(SUM(amount))
+                                        from penalties
+                                        GROUP BY playerno)
+                    group by playerno);
+                    
+                    
+                    
+select
+    extract(year from to_date(pen_date,'dd-mm-yyyy')) as Year,
+    COUNT(all paymentno) as times
+from penalties
+having COUNT(all paymentno) in(select
+                    MAX(COUNT(all paymentno))
+                from penalties
+                group by extract(year from to_date(pen_date,'dd-mm-yyyy')))
+group by extract(year from to_date(pen_date,'dd-mm-yyyy'));
+
+
+
+
+
+select
+    playerno,
+    teamno,
+    won,
+    lost
+from matches
+order by lost;
+
+
+
+
+
+
+
+
+
+select 
+    *
+from emp
+where deptno = 30
+order by sal DESC;
+
+
+select 
+    *
+from emp
+order by job ASC,sal;
+
+
+
+select 
+    *
+from emp
+order by hiredate DESC, ename;
+
+
+select 
+    *
+from emp
+where job = upper('salesman')
+order by comm ASC;
+
+
+select
+    department_id,
+    ROUND(AVG(SALARY),2)
+from employees
+GROUP BY department_id;
+
+
+select
+    job,
+    ROUND(AVG(sal),2)
+from emp
+GROUP by job
+having count(all sal) > 2;
+
+
+
+select
+    deptno
+from emp
+GROUP BY deptno
+having count(all empno) >2;
+
+
+select
+    ROUND(AVG(SAL+NVL(COMM,0)),2)
+from emp
+where deptno = 30;
