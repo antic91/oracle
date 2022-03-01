@@ -10,3 +10,119 @@ from players a,
     group by playerno) b    
 where a.playerno = b.playerno
 ;
+
+
+select
+    name,
+    p.pen_date,
+    p.amount
+FROM players,
+    (select
+        *
+    from penalties) p
+ORDER BY p.amount;
+
+
+
+SELECT
+    teamno,
+    name
+FROM
+    teams t,
+    LATERAL(
+        SELECT
+            name,
+            count(all playerno)
+        FROM
+            players p
+        WHERE
+            t.playerno = p.playerno
+        GROUP BY name
+    )
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ORDER BY t.teamno;
+
+
+
+
+
+select
+    name,
+    won,
+    lost
+from players p,
+    LATERAL(select 
+                count(all playerno),
+                sum(won) won,
+                sum(lost) lost
+            from matches m
+            where p.playerno = m.playerno
+            GROUP BY playerno);
+            
+            
+            
+            
+            
+select
+    p.playerno,
+    p.name,
+    NVL(sum_amount,null)
+from players p,
+    LATERAL(SELECT
+                count(all amount),
+                SUM(amount) sum_amount
+            from penalties b
+            where p.playerno = b.playerno
+            GROUP BY b.playerno)
+order by sum_amount ASC;
+
+
+
+
+
+
+
+
+
+**************************************************************
+
+select
+    e.ename,
+    city
+from emp e,
+    LATERAL(SELECT 
+                loc city
+            from dept d
+            where e.deptno = d.deptno
+            )
+where e.ename = upper('Allen');
+
+
+
+select 
+    extract(year from TO_DATE(hiredate,'dd-mm-yyyy')),
+    count(all extract(year from TO_DATE(hiredate,'dd-mm-yyyy')))
+from emp
+GROUP BY extract(year from TO_DATE(hiredate,'dd-mm-yyyy'));
+
+
+SELECT
+    e.ename,
+    e.job,
+    city
+from emp e,
+    LATERAL(select
+                d.loc city,
+                d.deptno
+            from dept d
+            where loc = 'CHICAGO'
+            and e.deptno = d.deptno);
