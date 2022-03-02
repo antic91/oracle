@@ -1,3 +1,18 @@
+select
+    name
+from players
+WHERE playerno in(select
+                    count(DISTINCT teamno)
+                from matches
+                GROUP BY playerno
+                HAVING count(DISTINCT teamno)>1);
+
+
+
+
+
+
+
 select 
     name,
     initials
