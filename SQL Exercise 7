@@ -1,0 +1,65 @@
+select 
+    name,
+    initials
+from players p,
+    LATERAL(select 
+            *
+        from penalties
+        where EXTRACT(YEAR FROM to_date(pen_date, 'dd-mm-yyyy')) != 1980
+        and p.playerno = penalties.playerno);
+        
+        
+        
+        
+        select 
+    *
+from players p,
+    LATERAL(select 
+            *
+        from penalties
+        where amount > 80
+        and p.playerno = penalties.playerno);
+        
+        
+        
+        
+        select 
+    *
+from employees e
+where salary > (select
+                    AVG(salary)
+                from employees b
+                group by department_id
+                having e.department_id = b.department_id)
+                
+                
+                
+                
+                
+                
+                
+select 
+    *
+from departments d
+where EXISTS(
+            select
+                department_id,
+                count(all employee_id)
+            from employees
+            where d.department_id = employees.department_id
+            group by department_id);
+
+
+
+
+select 
+    *
+from departments d
+where EXISTS(select 
+                department_id,
+                count(*)
+            from employees
+            where salary > 1000
+            and department_id IS NOT NULL
+            and d.department_id = department_id
+            group by department_id);
