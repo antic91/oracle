@@ -1,0 +1,5 @@
+select
+    *
+from parts
+where SUPER = 'P3'
+OR SUPER = 'P9';
