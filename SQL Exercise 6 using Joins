@@ -1,0 +1,91 @@
+select
+    name,
+    initials,
+    NVL(won,0),
+    NVL(lost,0)
+from players p 
+left join matches m
+ON p.playerno = m.playerno;
+
+
+
+select
+    name,
+    pen_date,
+    amount
+from players p 
+right join penalties pe
+ON p.playerno = pe.playerno
+order by amount DESC;
+
+
+
+
+
+select
+    t.teamno,
+    p.name
+from teams t
+left join players p
+ON t.playerno = p.playerno;
+
+
+
+select
+    p.name,
+    m.won,
+    m.lost
+from players p
+inner join matches m
+ON p.playerno = m.playerno
+AND m.won != 0;
+
+
+
+
+select
+    p.playerno,
+    p.name,
+    pe.amount
+from players p
+left join penalties pe
+ON p.playerno = pe.playerno
+order by pe.amount ASC;
+
+
+
+
+
+select
+    e.empno,
+    e.ename,
+    d.loc
+from emp e 
+INNER JOIN dept d
+ON e.ename = upper('allen')
+AND e.deptno = d.deptno;
+
+
+
+
+SELECT 
+    E.ENAME,
+    E.SAL,
+    M.ENAME,
+    M.SAL
+FROM EMP E 
+INNER JOIN EMP M
+ON E.MGR = M.EMPNO
+AND E.SAL > M.SAL;
+
+
+
+
+select
+    extract(YEAR from to_date(hiredate,'dd-mm-yyyy')),
+    count(all e.ename)
+from emp e
+GROUP BY extract(YEAR from to_date(hiredate,'dd-mm-yyyy'));
+
+
+
