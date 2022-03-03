@@ -1,0 +1,84 @@
+drop table "ZANTIC"."KZ_REGIONS" cascade constraints PURGE;
+drop table "ZANTIC"."KZ_COUNTRIES" cascade constraints PURGE;
+drop table "ZANTIC"."KZ_LOCATIONS" cascade constraints PURGE;
+drop table "ZANTIC"."KZ_DEPARTMENTS" cascade constraints PURGE;
+drop table "ZANTIC"."KZ_JOBS" cascade constraints PURGE;
+drop table "ZANTIC"."KZ_EMPLOYEES" cascade constraints PURGE;
+drop table "ZANTIC"."KZ_JOB_HISTORY" cascade constraints PURGE;
+
+
+
+create table kz_regions(
+regions_id number(11) CONSTRAINT pk_r_id PRIMARY KEY,
+region_name VARCHAR(25) NOT NULL
+);
+
+
+create table kz_countries(
+country_id VARCHAR(2) CONSTRAINT pk_c_id PRIMARY KEY,
+country_name VARCHAR(40) NOT NULL,
+reg_id number(11) not null, 
+CONSTRAINT country_reg_id FOREIGN KEY (reg_id) REFERENCES kz_regions(regions_id)
+);
+
+
+
+create table kz_locations(
+location_id NUMBER(4) CONSTRAINT loc_id_pk PRIMARY KEY,
+street_adresss VARCHAR(40),
+postal_code VARCHAR(12),
+city VARCHAR(30),
+state_province VARCHAR(25),
+country_id VARCHAR(2),
+CONSTRAINT location_con_id FOREIGN KEY (country_id) REFERENCES kz_countries(country_id)
+);
+
+
+
+
+create table kz_departments(
+dep_id NUMBER(4) CONSTRAINT dep_id_pk PRIMARY KEY,
+dep_name VARCHAR(30) NOT NULL,
+manager_id NUMBER(6),
+location_id NUMBER(4),
+CONSTRAINT depn_loc_id FOREIGN KEY (location_id) REFERENCES kz_locations(location_id)
+);
+
+
+
+create table kz_jobs(
+job_id VARCHAR(20) CONSTRAINT pk_jobs_id PRIMARY KEY,
+job_title VARCHAR(35),
+min_sal NUMBER(6),
+may_sal NUMBER(6)
+);
+
+
+
+create table kz_employees(
+employee_id NUMBER(6) CONSTRAINT emp_id_pk PRIMARY KEY,
+first_name VARCHAR(20),
+last_name VARCHAR(20),
+email VARCHAR(25),
+phone_number VARCHAR(20),
+hire_date DATE,
+salary NUMBER(8,2),
+commission_pct NUMBER(2,2),
+job_id VARCHAR(20) CONSTRAINT fk_emp_job REFERENCES kz_jobs(job_id),
+manager_id NUMBER(6) CONSTRAINT fk_emp_man REFERENCES kz_employees(employee_id),
+department_id NUMBER(4) CONSTRAINT fk_emp_dep REFERENCES kz_departments(dep_id)
+);
+
+
+
+
+create table kz_job_history(
+employee_id NUMBER(6) CONSTRAINT job_id_emp UNIQUE,
+start_date DATE CONSTRAINT job_date_pk PRIMARY KEY,
+end_date DATE,
+job_id VARCHAR(20) CONSTRAINT fk_job_pkJOB REFERENCES kz_jobs(job_id),
+department_id NUMBER(4) CONSTRAINT fk_job_depFK REFERENCES kz_departments(dep_id),
+CONSTRAINT job_h_fk_emp_id FOREIGN KEY(employee_id) REFERENCES kz_employees(employee_id)
+);
+
+commit;
