@@ -1,0 +1,110 @@
+select
+    p.name,
+    count(DISTINCT m.teamno) as number_of_teams
+from matches m
+left join players p
+ON p.playerno = m.playerno
+GROUP BY p.name
+HAVING count(DISTINCT m.teamno) >1;
+
+
+
+select
+    p.name,
+    p.initials,
+    EXTRACT(YEAR FROM to_date(pen_date,'dd-mm-yyyy'))
+from players p
+right join penalties pe
+on pe.playerno = p.playerno
+where EXTRACT(YEAR FROM to_date(pen_date,'dd-mm-yyyy')) not in (80);
+
+
+
+select
+    p.name,
+    count(all pe.amount)number_of_payments,
+    pe.playerno,
+    sum(amount)
+from players p
+left join penalties pe
+ON p.playerno = pe.playerno
+where pe.amount > 80
+group by pe.playerno, p.name;
+
+
+any-----
+select
+    *
+from players p
+inner join penalties pe
+ON p.playerno = pe.playerno
+where amount > 80;
+
+
+
+AVG SALARY
+select 
+    e.* 
+from emp e
+inner join (select 
+                deptno,
+                avg(sal) as avg
+            from emp 
+            group by deptno) eb
+on e.deptno = eb.deptno 
+and e.sal > eb.avg;
+
+
+
+
+
+
+
+select
+    d.dname,
+    d.deptno,
+    d.loc
+from dept d
+inner join emp e
+on d.deptno = e.deptno
+GROUP BY d.dname,d.deptno,d.loc;
+
+
+
+select
+    d.dname,
+    d.deptno,
+    d.loc
+from dept d
+inner join emp e
+on d.deptno = e.deptno 
+where e.sal > 3000
+GROUP BY d.dname,d.deptno,d.loc;
+
+
+
+
+
+
+select 
+    d.dname,
+    e.deptno,
+    count(all e.sal),
+    eb.depno
+from emp e
+inner join (select 
+                deptno,
+                count(all deptno) as depno
+            from emp 
+            group by deptno) eb
+on e.deptno = eb.deptno
+and e.sal > 1000  
+inner join dept d
+on d.deptno = e.deptno
+GROUP BY e.deptno,eb.depno,d.dname
+having count(all e.sal) = eb.depno;
+
+
+
+
+ 
