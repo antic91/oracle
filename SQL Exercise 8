@@ -3,3 +3,33 @@ select
 from parts
 where SUPER = 'P3'
 OR SUPER = 'P9';
+
+
+
+
+5++
+SELECT 
+    *
+FROM emp e
+START WITH e.ename = 'JONES'
+CONNECT BY PRIOR e.empno = e.mgr
+order by job asc;
+
+**************************6
+SELECT 
+    *
+FROM emp e
+START WITH e.ename = 'SMITH'
+CONNECT BY PRIOR e.mgr = e.empno;
+
+
+
+
+SELECT 
+    job,
+    AVG(sal)
+FROM emp e
+START WITH e.ename = 'JONES'
+CONNECT BY PRIOR e.empno = e.mgr
+group by job
+order by job asc;
