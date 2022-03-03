@@ -126,3 +126,15 @@ from emp e,
             from dept d
             where loc = 'CHICAGO'
             and e.deptno = d.deptno);
+
+
+
+
+select 
+    e.*
+from emp e,
+    LATERAL(select 
+                mgr 
+            from emp em
+            where e.mgr = em.empno and
+            e.sal > em.sal) ems
