@@ -1,0 +1,34 @@
+5+++
+
+select 
+    e.*,
+    'Reports to' as rep,
+    e2.ename AS Reports_to
+from emp e
+left join emp e2
+on e.mgr = e2.empno
+START WITH e2.ename = 'JONES'
+CONNECT BY PRIOR e.empno = e.mgr
+order by e.job;
+
+
+6
+select 
+    e.*
+from emp e
+left join emp e2
+on e2.mgr = e.empno
+START WITH e2.ename = 'SMITH'
+CONNECT BY PRIOR e.empno = e2.empno
+order by e.job;
+
+
+
+select 
+    AVG(e.sal)
+from emp e
+left join emp e2
+on e.mgr = e2.empno
+START WITH e2.ename = 'JONES'
+CONNECT BY PRIOR e.empno = e.mgr
+order by e.job;
