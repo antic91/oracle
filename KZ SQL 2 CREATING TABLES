@@ -73,8 +73,8 @@ department_id NUMBER(4) CONSTRAINT fk_emp_dep REFERENCES kz_departments(dep_id)
 
 
 create table kz_job_history(
-employee_id NUMBER(6) CONSTRAINT job_id_emp UNIQUE,
-start_date DATE CONSTRAINT job_date_pk PRIMARY KEY,
+employee_id NUMBER(6) CONSTRAINT job_id_emp PRIMARY KEY,
+start_date DATE NOT NULL CONSTRAINT job_date_pk UNIQUE,
 end_date DATE,
 job_id VARCHAR(20) CONSTRAINT fk_job_pkJOB REFERENCES kz_jobs(job_id),
 department_id NUMBER(4) CONSTRAINT fk_job_depFK REFERENCES kz_departments(dep_id),
