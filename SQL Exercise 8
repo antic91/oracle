@@ -33,3 +33,11 @@ START WITH e.ename = 'JONES'
 CONNECT BY PRIOR e.empno = e.mgr
 group by job
 order by job asc;
+
+
+----
+SELECT 
+    AVG(sal)
+FROM emp e
+START WITH e.ename = 'SMITH'
+CONNECT BY PRIOR e.mgr = e.empno;
