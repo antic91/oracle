@@ -1,0 +1,200 @@
+select
+    employee_id,
+    last_name,
+    job_id,
+    hire_date as STARTDATE 
+from kz_employees;
+
+
+
+select DISTINCT
+    job_id
+from kz_employees;
+
+
+
+
+select
+    last_name,
+    salary
+from kz_employees
+where salary > 12000;
+
+
+
+
+select
+    last_name,
+    department_id
+from kz_employees
+where employee_id = 176;
+
+
+
+
+select
+    last_name,
+    job_id,
+    hire_date
+from kz_employees
+order by hire_date ASC;
+
+
+
+
+select
+    last_name,
+    department_id
+from kz_employees
+where department_id = 20
+order by last_name ASC;
+
+
+
+
+select
+    last_name as Employee,
+    salary as "Monthly Salary",
+    commission_pct as "Commission headings"
+from kz_employees
+where commission_pct = 0.2
+
+
+
+
+JOINS
+
+1-----
+select
+    job_id,
+    SUM(salary)
+from kz_employees
+GROUP BY  job_id
+order by SUM(salary) DESC;
+
+select
+    e1.job_id,
+    SUM(e2.salary)
+from kz_employees e1
+inner join kz_employees e2
+on e2.employee_id = e1.employee_id
+GROUP BY e1.job_id
+order by sum(e2.salary) desc;
+
+
+
+
+
+2-----
+select
+    e.employee_id,
+    e.last_name,
+    avg(e2.salary)
+from kz_employees e
+inner join kz_employees e2
+on e2.employee_id = e.employee_id
+GROUP BY e.employee_id,e.last_name;
+
+
+
+
+3-----
+select
+    e.first_name,
+    e.last_name,
+    d.dep_name
+from kz_employees e
+left join kz_departments d
+on e.department_id = d.dep_id;
+
+
+
+
+
+4-----
+select
+    d.dep_name,
+    l.postal_code,
+    l.city,
+    l.state_province,
+    l.street_adresss
+from kz_departments d
+left join kz_locations l
+on d.location_id = l.location_id;
+
+
+
+
+5-----
+select
+    d.dep_name,
+    l.postal_code,
+    l.city,
+    l.state_province,
+    l.street_adresss,
+    c.country_name
+from kz_departments d
+left join kz_locations l
+on d.location_id = l.location_id
+left join kz_countries c
+on c.country_id = l.country_id;
+
+
+
+
+6-----
+select
+    e.first_name,
+    e.last_name,
+    d.dep_name,
+    l.postal_code,
+    l.city,
+    l.state_province,
+    l.street_adresss,
+    c.country_name
+from kz_departments d
+left join kz_locations l
+on d.location_id = l.location_id
+left join kz_countries c
+on c.country_id = l.country_id
+left join kz_employees e
+on d.dep_id = e.department_id
+and e.job_id in('AC_MGR','SA_MAN','ST_MAN','MK_MAN');
+
+
+
+
+7-----
+select
+    e.first_name as Name,
+    j.job_title as job,
+    e.salary,
+    d.dep_name
+from kz_employees e
+left join kz_jobs j
+on e.job_id = j.job_id
+left join kz_departments d
+on e.department_id = d.dep_id;
+
+
+
+
+
+
+8----- subordinates 
+select DISTINCT
+    e.employee_id,
+    e.first_name,
+    e.job_id,
+    e.manager_id,
+    e1.employee_id,
+    e1.first_name,
+    e1.manager_id
+from kz_employees e
+INNER join kz_employees e1
+on e.employee_id = e1.manager_id
+order by e.employee_id;
+
+
+
+
