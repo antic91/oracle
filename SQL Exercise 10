@@ -1,0 +1,109 @@
+select * from PLAYERS;
+
+delete from PLAYERS where name = 'Antic';
+
+
+INSERT INTO players VALUES
+(22,'Antic','A',1991,'M',2012,'Lilienthalstr',10,'4030','Linz',6642175969,4555);
+
+
+UPDATE PLAYERS
+SET
+sex = 'W'
+where sex = 'F';
+
+
+UPDATE PENALTIES p
+SET
+amount = amount + (amount * 0.2)
+where EXISTS(select 
+                    AVG(amount)
+                from penalties
+                having p.amount > AVG(amount));    
+                
+                
+            
+
+Update PLAYERS
+SET 
+street = (select 
+            p1.street
+        from players p1
+        where p1.playerno = 6),
+houseno = (select 
+            p2.houseno
+        from players p2
+        where p2.playerno = 6)
+where playerno = 95;
+                
+
+DELETE
+from penalties
+where playerno = 44
+and EXTRACT(YEAR FROM TO_DATE(pen_date, 'DD-MON-RR')) = 1980;
+
+
+
+DELETE 
+from penalties p
+where EXISTS(select 
+                m.playerno,
+                count(all m.teamno)
+            from matches m
+            where m.teamno = 2
+            and p.playerno = m.playerno
+            GROUP BY m.playerno);
+
+
+ROLLBACK;
+
+select * from penalties;
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+select * from emp;
+
+select * from DEPT;
+
+
+
+select
+    AVG(sal) *0.8
+from emp
+group by deptno;
+
+UPDATE
+emp e
+set sal = (select
+                AVG(eme.sal) *0.8
+            from emp eme
+            where e.deptno = eme.deptno
+            group by eme.deptno)
+where exists(select
+                AVG(em.sal) *0.8
+            from emp em
+            where e.deptno = em.deptno
+            group by em.deptno
+            HAVING e.sal < AVG(em.sal) *0.8);
+            
+            
+            
+select
+    *
+from emp
+where EXTRACT(YEAR FROM to_date(sysdate, 'dd-mm-yy')) - EXTRACT(YEAR FROM to_date(hiredate, 'dd-mm-yy')) > 35;
+
+DROP SEQUENCE  empno_seq;
+
+CREATE SEQUENCE empno_seq start with 50
+INCREMENT BY 10;
+
+
+SELECT empno_seq.NEXTVAL from dept;
+
+INSERT INTO DEPT VALUES 
+(empno_seq.NEXTVAL,'HTL', 'LEONDING');
